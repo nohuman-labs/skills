@@ -1,7 +1,7 @@
 ---
 name: twitter-profile-search
 description: Look up a public X (Twitter) profile by @handle through Twitee, with no X login or API key. Returns display name, bio, follower and following counts, post count, verified flag, location and join date. Read-only. Use when the user asks who an X account is or how many followers it has.
-version: 1.0.0
+version: 1.0.1
 homepage: https://twitee.co/
 metadata:
   openclaw:
@@ -29,8 +29,10 @@ Do not use it for tweets, replies, search or media. For those, give the user the
 Normalize the handle first: drop a leading `@`, accept only `[A-Za-z0-9_]`, 1 to 15 characters.
 
 ```sh
-curl -s "https://twitee.co/api/profile/<handle>"
+curl -s "https://twitee.co/api/profile/nasa"
 ```
+
+Replace `nasa` with the normalized handle.
 
 One request per handle. Do not loop or poll.
 
@@ -59,7 +61,7 @@ Other states:
 
 | Response | What to tell the user |
 |---|---|
-| `state: "unavailable"`, `code: "action_required"` | Twitee needs a browser visit to load this profile. Ask the user to open `https://twitee.co/<handle>`, then try the request again. |
+| `state: "unavailable"`, `code: "action_required"` | Twitee needs a browser visit to load this profile. Ask the user to open the profile on Twitee, for example `https://twitee.co/nasa`, then try the request again. |
 | `state: "not_found"` | The account does not exist or is suspended. |
 | `code: "invalid_request"` (HTTP 400) | The handle is not a valid X username. |
 | `code: "rate_limited"` (HTTP 429) | Wait about a minute, then try once more. |
@@ -69,7 +71,7 @@ Other states:
 
 Always end with the profile link so the user can read the tweets themselves:
 
-- Profile and tweets: `https://twitee.co/<handle>`
+- Profile and tweets: `https://twitee.co/nasa` (replace `nasa` with the handle)
 - One tweet: `https://twitee.co/tweet-viewer`
 - Search tweets: `https://twitee.co/twitter-search`
 - Download a video: `https://twitee.co/twitter-video-downloader`
